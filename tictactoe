@@ -1,0 +1,121 @@
+import os #importing os so i can use its underlying operating system
+
+class Board():
+    def __init__(self): # opening the board
+        self.cells = [" "," "," "," "," "," "," "," "," "," "]
+
+    def drawBoard(self):  ## Drawing the board
+        print(f'{self.cells[1]} | {self.cells[2]} | {self.cells[3]}')
+        print("---------")
+        print(f'{self.cells[4]} | {self.cells[5]} | {self.cells[6]}')
+        print("---------")
+        print(f'{self.cells[7]} | {self.cells[8]} | {self.cells[9]}')
+    
+    def play(self):
+        owrong = True  # This variable to make sure the O player doesn't put a square that's already taken
+        self.drawBoard()
+        x = int(input('X) Please choose a square from 1-9 >'))
+        if self.cells[x] == " ":  ## If the square is empty.
+            self.cells[x] = "X"
+        else:
+            print("Square already taken")
+            return
+        self.drawBoard()
+        if self.isWin("X") == True:
+            return
+        if self.isTie():
+            return
+        o = int(input('O) Please choose a square from 1-9 >'))
+        while owrong:                   ## Do - while loop to execute at least once. If the squuare is empty break out of the loop.
+            if self.cells[o] == " ":
+                self.cells[o] = "O"
+                owrong=False
+            else:
+                print("Square already taken")
+                o = int(input('O) Please choose a square from 1-9 >'))
+    
+    def isWin(self,player):  ## This function is to know if a player wins
+        if self.cells[1] == player and self.cells[2] == player and self.cells[3] == player:
+            return True
+        if self.cells[4] == player and self.cells[5] == player and self.cells[6] == player:
+            return True
+        if self.cells[7] == player and self.cells[8] == player and self.cells[9] == player:
+            return True
+        if self.cells[1] == player and self.cells[4] == player and self.cells[7] == player:
+            return True
+        if self.cells[2] == player and self.cells[5] == player and self.cells[8] == player:
+            return True
+        if self.cells[3] == player and self.cells[6] == player and self.cells[9] == player:
+            return True
+        if self.cells[1] == player and self.cells[5] == player and self.cells[9] == player:
+            return True
+        if self.cells[3] == player and self.cells[5] == player and self.cells[7] == player:
+            return True
+    
+    def resetBoard(self): ## This function resets the board in case the players wants to play again.
+        self.cells = [" "," "," "," "," "," "," "," "," "," "]
+    
+    def isTie(self):   ## This function checks if all the cells are filled but no players have won.
+        used=0
+        for cell in self.cells:
+            if cell != " ":
+                used+=1
+        if used == 9:
+            return True
+        else:
+            return False
+
+
+
+
+if __name__ == "__main__": 
+    board = Board()
+    while True:
+        print("Welcome to Tic Tac Toe")
+        board.play()
+        if board.isWin("X"):
+            print("X wins the game!")
+            choice = input("Would you like to play again? (Y/N) > ").upper()
+            if choice =="Y":
+                board.resetBoard()
+            else:
+                print("Thanks for playing!")
+                break
+        if board.isTie():
+            print("This round is a tie")
+            choice = input("Would you like to play again? (Y/N) > ").upper()
+            if choice =="Y":
+                board.resetBoard()
+            else:
+                print("Thanks for playing!")
+                break
+        if board.isWin("O"):
+            print("O Wins the game!")
+            choice = input("Would you like to play again? (Y/N) > ").upper()
+            if choice =="Y":
+                board.resetBoard()
+            else:
+                print("Thanks for playing!")
+                break
+
+#What is the difference between OOP and Procedural coding?
+            #OOP coding uses classes and objects where Procedual coding takes on applications by solving problems from the top of the code down
+            #to the bottom. Procedural coding consists of a set of steps that gets carried out. Procedures can call upon one another in
+            #Procedural code at any given moment. OOP is designed using the consept of objects that interact with the real world.
+#How would my program differ if it were made in procedural coding instead?
+            #My code would essentially have to be flipped upside down as OOP takes a bottom-up approach when reading code and Procedural
+            #coding takes a top to bottom approach.In procedural code the code is divided into small parts called funtions.In OOP the code
+            #is divided into small parts called objects.If my code was procedurally orientated it would involve a lot mor calling of
+            #functions rather than classes.
+#What are the benefits of OOP?
+            #An existing class can be extended through Inheritance.
+            #Data hiding enables writing secured programs.
+            #Multiple instances of an object can be generated to co-exist without any interference.
+            #Different modules can be created in the project using objects.
+            #It is highly beneficial in solving complex problems.
+            #OOP makes it easier to modify and maintain software complexity.
+#What are the drawbacks?
+            #Programs are bigger as the require more lines of code
+            # OOP projects are normally slower than procdure based prgrams as they usually need more guidelines to be executed
+            # OOP does not work for a wide range of problems, there are problems that need strategy based style coding to be solved and using
+            # OOP to accomplish that will not be affective
